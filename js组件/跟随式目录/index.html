@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<style>
+body{
+				margin:10px;
+				height:4000px;
+}
+.title{
+				font-weight:bold;
+				color:blue;
+				position: relative;
+				bottom: 9px;
+				background: white;
+				width: 80px;
+				text-align: center;
+				left: 5px;
+}
+#classical,#img,#guige,#miaoshu{
+				border:1px solid blue;
+				margin:20px 0px;
+}
+.content{
+	padding:10px;
+}
+
+ul{
+				margin:0px;
+				padding:0px;
+}
+
+li{
+				list-style:none;
+}
+.index{
+	width:100px;
+	position:fixed;
+	z-index:111;
+	top:20px;
+	right:20px;
+}
+.index ul{
+	background:#eee;
+	width:100px;
+	text-align:center;
+}
+.index ul li{
+	padding:10px 0px;
+}
+.active {
+	background:red;
+	color:white;
+}
+</style>
+</head>
+<body>
+<div class="index">
+        <ul>
+                <li>基本信息</li>
+                <li>商品图片</li>
+                <li>商品规格</li>
+                <li>商品描述</li>
+        </ul>
+</div>
+<div id="classical">
+				<div class="title">基本信息</div>
+				<div class="content">
+								<ul>
+												<li>商品类型：*通用类型</li>
+												<li>管理分类：*通用分类选择管理分类</li>
+												<li>展示分类：*锉选择展示分类[新增分类]</li>
+												<li>商品名称：*威达中齿胶柄方锉</li>
+												<li>商品编号：* 4880000401</li>
+												<li>关键字：中齿,方锉 [从商品名称获取关键字]</li>
+												<li>品牌：威达工具 [新增品牌]</li>
+												<li>销售状态：上架下架</li>
+												<li>会员价：此商品不参与会员价折扣</li>
+												<li>库存数量：100</li>
+								</ul>
+				</div>
+</div>
+<div id="img">
+				<div class="title">商品图片</div>
+				<div class="content">
+								<img src="http://www.dag1688.com/fileRepository/product/others/O1SUmeywQ8uOWK2Wdjp3fw.jpg" alt=""><br>		
+								<img src="http://www.dag1688.com/fileRepository/product/others/CdXNalo6RU2dgfpr3NwrKw.jpg" alt="">
+				</div>
+</div>
+<div id="guige">
+			<div class="title">商品规格</div>				
+			<div class="content">
+					<ul>
+					        <li>系统规格:自定义规格值</li>
+					        <li>型号1:150mm</li>
+					        <li>型号2:200mm</li>
+					        <li>型号3:250mm</li>
+					        <li>型号4:300mm</li>
+					</ul>
+			</div>
+</div>
+<div id="miaoshu">
+		<div class="title">商品描述</div>
+		<div class="content">
+				<img src="http://www.dag1688.cc/img-store/dag-wuliu.jpg" alt="">
+		</div>
+</div>	       
+<script>
+	var index = document.getElementsByClassName("index")[0];
+	var index_li = document.getElementsByTagName("li");
+	for(var i=0;i<index_li.length;i++){
+	window.onscroll = function (){
+		var str = document.documentElement.scrollTop || document.body.scrollTop;
+			if(str>0&&str<300){
+				index_li[0].className = "active";				
+}	else{
+	index_li[0].className = "";
+} if(str>300&&str<1800){
+				index_li[1].className = "active";				
+}else{
+				index_li[1].className = "";				
+}  if(str >1800 && str<2000){
+				index_li[2].className = "active";
+}else{
+				index_li[2].className = "";				
+}  if(str >2000){
+				index_li[3].className = "active";
+}else{
+				index_li[3].className = "";				
+
+}
+}	
+}
+</script>
+</body>
+</html>
