@@ -1,53 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="UTF-8">
-        <title></title>
-				<link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
-				<style>
-					.slider{
-						margin:auto;
-						border:1px solid black;
-						width:620px;
-						height:330px;
-						overflow: hidden;					}
-					.slider .img{
-						width:1860px;
-						height:inherit;
-						text-align:center;
-						position:relative;
-						transition:right 5s;
-						-webkit-transition:right 5s;
-						-moz-transition:right 5s;
-					}
-					.slider .img div{
-						width:auto;
-						height:330px;
-						float: left;
-					}
-					.slider .img div img{
-						width:100%;
-						height:auto;
-					}
-				</style>
-</head>
-<body>
-      <div class="slider">
-              <div class="img">
-									<div class="slider-1">
-								<img src="http://www.dag1688.cc/blog/wp-content/uploads/2016/05/%E5%85%AC%E7%89%9B%E8%BF%B7%E4%BD%A0%E6%99%BA%E8%83%BDUSB%E6%8F%92%E5%BA%A7.jpg" alt="">
-									</div>
-									<div class="slider-2">
-								<img src="http://www.dag1688.cc/blog/wp-content/uploads/2016/05/%E5%B7%A5%E4%B8%9A%E6%9C%BA%E5%99%A8%E4%BA%BA.jpg" alt="">
-									</div>
-									<div class="slider-3">
-									<img src="http://www.dag1688.cc/blog/wp-content/uploads/2016/03/metabo-cover.jpg" alt=""> 
-									</div>
-							</div>
-							<div class="control">
-							        <span><</span>
-							        <span>></span>
-							</div>
-      </div>	  
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="http://127.0.0.1/~pengjiang/Git-hub/Jonny-UI/font-awesome/css/font-awesome.min.css">		
+		<style>
+			#slider{
+				margin:auto;
+				border:1px solid black;
+				width:620px;
+				height:330px;
+			}
+			.slider{
+				width:inherit;
+				height:inherit;
+				overflow: hidden;					}
+			.slider .img{
+				width:1860px;
+				height:inherit;
+				text-align:center;
+				position:relative;
+				transition:right 3s;
+				-webkit-transition:right 3s;
+				-moz-transition:right 3s;
+			}
+			.slider .img div{
+				width:auto;
+				height:330px;
+				float: left;
+			}
+			.slider .img div img{
+				width:100%;
+				height:auto;
+			}
+			.control{
+				width: 620px;
+				margin: auto;
+				position: relative;
+				bottom: 330px;
+				height: inherit;
+				line-height: 330px;
+				padding: 0px 10px;
+				line-height: 330px;
+			}
+			.control i{
+				display:block;
+				width:300px;
+				float:left;
+				line-height:inherit;
+			}
+			.control .fa-angle-right{
+				text-align:right;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div id="slider">
+			<div class="slider">
+				<div class="img" id="img">
+					<div class="slider-1">
+						<img src="http://www.dag1688.cc/blog/wp-content/uploads/2016/05/%E5%85%AC%E7%89%9B%E8%BF%B7%E4%BD%A0%E6%99%BA%E8%83%BDUSB%E6%8F%92%E5%BA%A7.jpg" alt="">
+					</div>
+					<div class="slider-2">
+						<img src="http://www.dag1688.cc/blog/wp-content/uploads/2016/05/%E5%B7%A5%E4%B8%9A%E6%9C%BA%E5%99%A8%E4%BA%BA.jpg" alt="">
+					</div>
+					<div class="slider-3">
+						<img src="http://www.dag1688.cc/blog/wp-content/uploads/2016/03/metabo-cover.jpg" alt=""> 
+					</div>
+				</div>
+			</div>	  
+			<div class="control">
+				<i class="fa fa-angle-left fa-2x"></i>
+				<i class="fa fa-angle-right fa-2x"></i>
+			</div>
+		</div>
+		<script>
+			var num = 0;
+			var img = document.getElementById("img");
+			setInterval(slider,4000);
+			function slider(){
+				num+=620;	
+				if(num >1240){
+					num = 0;
+				};
+				img.style.right = num + "px";
+			};
+		</script>
+	</body>
 </html>
