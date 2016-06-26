@@ -44,6 +44,7 @@
 				line-height: 330px;
 			}
 			.control i{
+				color:white;
 				display:block;
 				width:300px;
 				float:left;
@@ -71,20 +72,31 @@
 				</div>
 			</div>	  
 			<div class="control">
-				<i class="fa fa-angle-left fa-2x"></i>
-				<i class="fa fa-angle-right fa-2x"></i>
+				<i id="prev" class="fa fa-angle-left fa-3x"></i>
+				<i id="next" class="fa fa-angle-right fa-3x"></i>
 			</div>
 		</div>
 		<script>
 			var num = 0;
 			var img = document.getElementById("img");
-			setInterval(slider,4000);
+			var prev = document.getElementById("prev");
+			var next = document.getElementById("next");
+			slider();
 			function slider(){
-				num+=620;	
-				if(num >1240){
-					num = 0;
+				next.onclick = function(){
+					num+=620;
+					if(num >1240){
+						num = 0;
+					};
+					img.style.right = num + "px";
 				};
-				img.style.right = num + "px";
+				prev.onclick = function (){
+					num-=620;
+					if(num <0){
+						num = 1240;
+					};
+					img.style.right = num + "px";
+				};
 			};
 		</script>
 	</body>

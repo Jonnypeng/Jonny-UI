@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style>
+		.showbox{
+			position:relative;
+			height:300px;
+			width:570px;
+			overflow:hidden;
+			border:10px solid #eee;
+			background:#eee;
+			border-radius:#eee;
+			-webkit-border-radius:#eee;
+			-moz-border-radius:#eee;
+		}
+		.imagebox{
+			position:relative;
+			height:270px;
+			width:570px;
+			top:0px;
+			left:5px;
+			overflow:hidden;
+		}
+		.imagebox img{
+			display:block;
+			width:570px;
+			height:270px;
+			float:left;
+		}
+		.icobox{
+			position:absolute;
+			border:none;
+			width:120px;
+			height:12px;
+			left:220px;
+			bottom:10px;
+			text-align:center;
+			line-height:40px;
+			overflow:hidden;
+		}
+		.icobox span{
+		background: url("http://www.itxueyuan.org/uploads/javascript/demo/lunbo/zuoyou_title/images/ico.png") 0px 0px no-repeat;
+		width:12px;
+		height:12px;
+		cursor:pointer;
+		float:left;
+		margin-left:15px;
+		}
+		.icobox span.active{
+		background: url("http://www.itxueyuan.org/uploads/javascript/demo/lunbo/zuoyou_title/images/ico.png") 0px -12px no-repeat;
+		cursor:default;	
+		}
+	</style>
+</head>
+<body>
+	<div class="showbox">
+		<div class="imagebox">
+			<img src="http://www.itxueyuan.org/uploads/javascript/demo/lunbo/zuoyou_title/images/1.jpg" alt="">
+			<img src="http://www.itxueyuan.org/uploads/javascript/demo/lunbo/zuoyou_title/images/2.jpg" alt="">
+			<img src="http://www.itxueyuan.org/uploads/javascript/demo/lunbo/zuoyou_title/images/3.jpg" alt="">
+			<img src="http://www.itxueyuan.org/uploads/javascript/demo/lunbo/zuoyou_title/images/4.jpg" alt="">
+		</div>
+		<div class="icobox">
+	<span rel="0" class="active">0</span>
+	<span rel="1">1</span>
+	<span rel="2">2</span>
+	<span rel="3">3</span>				
+		</div>
+	</div>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	var imagebox = $(".showbox").children(".imagebox")[0],
+	icobox = $(".showbox").children(".icobox")[0],
+	ico = $(icobox).children("span"),
+	imagenum = $(imagebox).children().size(),
+	imageboxWidth = $(imagebox).width(),
+	imageWidth = imageboxWidth*imagenum,
+	activeID = parseInt($($(icobox).children(".active")[0]).attr("rel")),
+	nextID = 0,
+	intervalID,
+	delaytime = 4000,
+	speed = 700;
+	$(imagebox).css({'width':imageWidth + 'px'});
+
+	var rotate = function(clickID){
+		if(clickID+1){
+			nextID = clickID; 
+		}else {
+			nextID = (activeID+1)%4
+	};
+		$(ico[activeID]).removeClass("active");
+		$(ico[nextID]).addClass("active");
+		$(imagebox).animate({left:"-" + nextID*imageboxWidth + "px"},speed);
+		activeID = nextID;
+	};
+
+	intervalID = setInterval(rotate,delaytime);
+
+	$.each(ico,function(index,val){
+		$(this).click(function(event){
+			clearInterval(intervalID);
+			var clickID = index;
+			roate(clickID);
+			intervalID = setInterval(roate,delaytime);
+		});
+	});	
+
+
+});
+</script>
+</body>
+</html>
