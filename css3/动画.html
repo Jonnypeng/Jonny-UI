@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0, user-scalable=no">
+	<title></title>
+	<style>
+		body{
+			margin:0px;
+		}
+		#img-box{
+			width:100%;
+			height:100%;
+			overflow:hidden;
+			position:fixed;
+		}
+		#img-box-img{
+			height:100%;
+			width:auto;
+			position:relative;
+			animation:mymove 10s linear infinite alternate;
+			-moz-animation:mymove 10s linear infinite alternate;
+			-webkit-animation:mymove 10s linear infinite alternate;
+			-o-animation:mymove 10s linear infinite alternate;
+					}
+		@keyframes mymove{
+			from{left:0px}to{left:-500px}
+		}
+		@-webkit-keyframes mymove{
+			from{left:0px}to{left:-500px}
+		}
+	</style>
+</head>
+<body>
+	<div id="img-box"><img id="img-box-img" src="http://www.dcgzysjy.com/tt/Uploads/park/577cb48569da6.jpg" alt=""></div>
+	
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+<div id="title">
+	这是一篇测试文章
+</div>
+<div id="img">
+	<img src="http://image.webservices.ft.com/v1/images/raw/http%3A%2F%2Fi.ftimg.net%2Fpicture%2F5%2F000063625_piclink.jpg?source=ftchinese&width=250&height=141&fit=cover" alt="">
+</div>
+<script>
+	var st = window.parent;
+	st.document.getElementById("content").style.width = "900px";		//设置父级DOM元素尺寸
+	parent.window.fn1();			//调用父级DOM的fn1函数；
+</script>
+</body>
+</html>
