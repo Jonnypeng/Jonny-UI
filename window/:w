@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<script>
+	frames["my"].fn1();	
+</script>
+</head>
+<body>
+<iframe name="my" src="a.html" border="0"></iframe>		
+</body>
+</html>
