@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+<iframe id="my" name="my" src="a.html" border="0"></iframe>		
+<script>
+	var x=document.getElementById("my");
+	var y=(x.contentWindow || x.contentDocument);
+	y.fn1();	
+</script>
+</body>
+</html>
