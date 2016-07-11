@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+	<style>
+		#content{
+			width:100%;
+			height:100%;
+			margin:auto;
+			position:fixed;
+				background: #eee;
+					left: 0px;
+						top: 0px;
+		}
+		#content>div{
+			float:left;
+		}
+		#source{
+			width:18%;
+				height:98%;
+				padding:1%;
+		}
+		#touch-source{
+			text-align:center;
+			width:30%;
+		}
+		#target{
+			width:78%;
+				height:98%;
+					padding:1%;
+						background:gray;
+		}
+		.title{
+			cursor:move;
+		}
+	</style>
+</head>
+<body>
+	<div id="content">
+		<div id="source" ondragover="allowDrop(event)" ondrop="drop(event)">
+			<div id="touch-source" draggable="true" ondragstart="drag(event)">
+				<span class="title"><i class="fa fa-map-pin"></i><br />景点</span>
+			</div>
+	</div>
+		<div id="target" ondrop="drop(event)" ondragover="allowDrop(event)">
+		</div>
+	</div>		
+	<script>
+			function drag(ev){
+				ev.dataTransfer.setData("Text",ev.target.id);
+			};
+
+			function allowDrop(ev){
+				ev.preventDefault();
+			};
+			function drop(ev){
+				ev.preventDefault();
+				var data = ev.dataTransfer.getData("Text");
+				ev.target.appendChild(document.getElementById(data));
+			};
+
+	</script>
+</body>
+</html>
