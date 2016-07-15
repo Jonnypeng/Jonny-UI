@@ -1,66 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title></title>
-	<link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
-	<style>
-		#content{
-			width:100%;
-			height:100%;
-			margin:auto;
-			position:fixed;
-				background: #eee;
-					left: 0px;
-						top: 0px;
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+		<style>
+table{
+	width:800px;
+	height:800px;
+	float:left;
+}
+		td{
+			background:gray;	
 		}
-		#content>div{
-			float:left;
-		}
-		#source{
-			width:18%;
-				height:98%;
-				padding:1%;
-		}
-		#touch-source{
-			text-align:center;
-			width:30%;
-		}
-		#target{
-			width:78%;
-				height:98%;
-					padding:1%;
-						background:gray;
-		}
-		.title{
-			cursor:move;
-		}
-	</style>
-</head>
-<body>
-	<div id="content">
-		<div id="source" ondragover="allowDrop(event)" ondrop="drop(event)">
-			<div id="touch-source" draggable="true" ondragstart="drag(event)">
-				<span class="title"><i class="fa fa-map-pin"></i><br />景点</span>
-			</div>
-	</div>
-		<div id="target" ondrop="drop(event)" ondragover="allowDrop(event)">
-		</div>
-	</div>		
-	<script>
-			function drag(ev){
-				ev.dataTransfer.setData("Text",ev.target.id);
-			};
 
-			function allowDrop(ev){
-				ev.preventDefault();
-			};
-			function drop(ev){
-				ev.preventDefault();
-				var data = ev.dataTransfer.getData("Text");
-				ev.target.appendChild(document.getElementById(data));
-			};
+		.fa{
+			position: fixed;
+			right: 215px;
+			bottom: 400px;
+		}
+
+
+		</style>
+	</head>
+	<body>
+		<div id="tar1" style="width:300px;height:200px;background:red" ondrop="drop(event)" ondragover="dragover(event)"></div>
+		<table	id="content" ondragover="dragover(event)" ondrop="drop(event)">
+		</table>		
+		<span id="sour" class="fa fa-map-pin fa-2x" draggable="true" ondragstart="dragstart(event)"></span>
+	</body>
+	<script>
+var $ = function (id){
+	return document.getElementById(id);
+};
+for(var i=0;i<=9;i++){
+	var tr = document.createElement("tr");
+	tr.className = "tr" + i;
+	tr.innerHTML = "<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>";
+	$("content").appendChild(tr);
+};
+
+var td = document.getElementsByTagName("td");
+for (var i in td){
+	td[i].ondragover = function (event){
+		dragover(event);
+	};
+
+	td[i].ondrop = function (event){
+		drop(event);
+	};
+};
+
+
+
+for(var j=0;j<document.getElementsByTagName("td").length;j++){
+	document.getElementsByTagName("td")[j].className = "td" + j;
+};
+
+function dragstart(ev){
+	ev.dataTransfer.setData("Text","event.target.id");
+};
+
+function dragover(ev){
+	ev.preventDefault();
+};
+
+function drop(ev){
+	ev.preventDefault();
+	var data = ev.dataTransfer.getData("Text");
+	ev.target.appendChild(document.getElementById(data));
+};
+
+	console.log(td[5].ondragover());
 
 	</script>
-</body>
 </html>

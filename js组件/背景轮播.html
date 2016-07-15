@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0, user-scalable=no">
+	<style>
+	body{
+	margin:0px;
+	}
+	#background{
+	position:fixed;
+	overflow:hidden;
+	width:100%;
+	height:100%;
+	}
+	#bg-img{
+	height:100%;
+	width:auto;
+	position:relative;
+	}
+	</style>
+</head>
+<body>
+	<div id="background">
+		<img id="bg-img" src="http://mjly.uvcsi.com/Uploads/park/5785ab73663b2.jpg" alt="">
+	</div>		
+
+
+	<script>
+		var bg = document.getElementById("bg-img");
+		var imgWidth = bg.clientWidth;
+		var mobileWidth = window.innerWidth;
+		var max = imgWidth - mobileWidth;						
+		var min = 0;
+		var right = 0;
+		var setp = 1;
+
+		setInterval(bgimg,70);
+		function bgimg(){
+		right+=setp;
+		if(right>=max || right<=min){
+			setp*=-1;
+		};
+		bg.style.right=right + "px";
+		};
+		
+
+	</script>
+</body>
+</html>
