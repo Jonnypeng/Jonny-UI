@@ -5,73 +5,71 @@
 		<title></title>
 		<link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
 		<style>
-table{
-	width:800px;
-	height:800px;
-	float:left;
+#main{
+	width:900px;
+	height:400px;
 }
-		td{
-			background:gray;	
-		}
+#target{
+	float:right;
+	width:800px;
+	height:400px;
 
-		.fa{
-			position: fixed;
-			right: 215px;
-			bottom: 400px;
-		}
-
-
+}
+#source{
+	color:gray;
+}
+			.target{
+				float:left;
+				width:80px;
+				height:40px;
+				line-height:10%;
+				border:0.5px #eee solid;
+				text-align: center;
+			}
 		</style>
 	</head>
 	<body>
-		<div id="tar1" style="width:300px;height:200px;background:red" ondrop="drop(event)" ondragover="dragover(event)"></div>
-		<table	id="content" ondragover="dragover(event)" ondrop="drop(event)">
-		</table>		
-		<span id="sour" class="fa fa-map-pin fa-2x" draggable="true" ondragstart="dragstart(event)"></span>
+		<div id="main">
+			<span id="source" class="fa fa-map-pin" draggable="true" ondragstart="drag(event)"></span>
+			<div id="target"></div>
+		</div>
 	</body>
 	<script>
-var $ = function (id){
-	return document.getElementById(id);
-};
-for(var i=0;i<=9;i++){
-	var tr = document.createElement("tr");
-	tr.className = "tr" + i;
-	tr.innerHTML = "<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>";
-	$("content").appendChild(tr);
+
+var target = document.getElementById("target");
+
+
+for(var i = 0;i<100;i++){
+	var tr = document.createElement("div");
+	tr.className = "target";
+	tr.id = "target"  +  i;
+	target.appendChild(tr);
 };
 
-var td = document.getElementsByTagName("td");
-for (var i in td){
-	td[i].ondragover = function (event){
-		dragover(event);
+var oTr	= document.getElementsByClassName("target");
+for(var j in oTr){
+	oTr[j].ondragover = function(event){
+		allowDrop(event);
 	};
-
-	td[i].ondrop = function (event){
+	oTr[j].ondrop = function (event){
 		drop(event);
-	};
+	};	
+
 };
 
-
-
-for(var j=0;j<document.getElementsByTagName("td").length;j++){
-	document.getElementsByTagName("td")[j].className = "td" + j;
-};
-
-function dragstart(ev){
-	ev.dataTransfer.setData("Text","event.target.id");
-};
-
-function dragover(ev){
+function allowDrop(ev) {
 	ev.preventDefault();
-};
+}
 
-function drop(ev){
+function drag(ev) {
+	ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
 	ev.preventDefault();
-	var data = ev.dataTransfer.getData("Text");
+	var data = ev.dataTransfer.getData("text");
 	ev.target.appendChild(document.getElementById(data));
-};
-
-	console.log(td[5].ondragover());
+}
 
 	</script>
 </html>
