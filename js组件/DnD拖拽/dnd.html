@@ -69,7 +69,7 @@ textarea.title{
 <body>
 <div id="main">
 	<div id="source">
-		<span id="source-icon" class="source-icon fa fa-map-pin" draggable="true" ondragstart="drag(event)"><br /><textarea placeholder="在这里输入景点" class="title" cols="3" rows="2" maxlength="8"/></textarea>
+		<span id="source-icon" class="source-icon fa fa-map-pin"><br /><textarea placeholder="在这里输入景点" class="title" cols="3" rows="2" maxlength="8"/></textarea>
 		</div>
 		<div id="target"></div>
 	</div>
@@ -101,11 +101,25 @@ for(var j in oTr){
 function allowDrop(ev) {
 	ev.preventDefault();
 }
-
-function drag(ev) {
-	ev.dataTransfer.setData("text", ev.target.id);
-}
-
+var sourceIcon = document.getElementsByClassName("source-icon");
+var sNum = 0;
+dragstart();
+function dragstart(event){
+for(var k in sourceIcon){
+sourceIcon[k].draggable=true;
+sourceIcon[k].ondragstart = function (event){
+	event.dataTransfer.setData("text", event.target.id);
+	sNum+=1;
+	console.log(sNum);
+	var source = document.createElement("span");
+	source.id="source-icon"+sNum;
+	source.className="source-icon fa fa-map-pin";
+	source.innerHTML ="<br /><textarea placeholder=\"在这里输入景点\" class=\"title\" cols=\"3\" rows=\"2\" maxlength=\"8\"/>";
+	document.getElementById("source").appendChild(source);
+dragstart();
+};
+};
+};
 function drop(ev) {
 	ev.preventDefault();
 	var data = ev.dataTransfer.getData("text");
