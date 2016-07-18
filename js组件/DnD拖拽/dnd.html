@@ -1,45 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-		<link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
-		<style>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+<style>
 #main{
+	margin:auto;
 	width:900px;
 	height:400px;
 }
 #target{
-	float:right;
+	float:left;
 	width:800px;
 	height:400px;
+	background:url(map.png);
 
 }
 #source{
-	color:gray;
+	width: 100px;
+	float: left;
+	text-align: center;
+	height: 100px;
+	margin: 150px auto;
+	line-height: 100px;
 }
-			.target{
-				float:left;
-				width:80px;
-				height:40px;
-				line-height:10%;
-				border:0.5px #eee solid;
-				text-align: center;
-			}
-		</style>
-	</head>
-	<body>
-		<div id="main">
-			<span id="source" class="fa fa-map-pin" draggable="true" ondragstart="drag(event)"></span>
-			<div id="target"></div>
-		</div>
-	</body>
-	<script>
+.source-icon{
+	color:gray;
+	cursor:move;
+}
+.source-icon .title{
+	font-size:x-small;
+}
 
+#target .source-icon{
+	color: blue;
+	margin: 10px 0px;
+	font-size: x-small;
+	height: 60px;
+	line-height: 22px;
+	font-weight:bold;
+}
+.target{
+	float:left;
+	width:80px;
+	height:80px;
+	line-height:80px;
+	border:0.5px #a2a2a2;
+	text-align: center;
+	box-sizing: border-box;
+	border-style: dashed;
+}
+#source-create{
+	font-size:x-small;
+	line-height:15px;
+}
+
+textarea.title{
+	border:none;
+	text-align: center;
+	word-break:break-all;
+	background:none;
+	resize:none;
+	overflow:hidden;
+}
+</style>
+</head>
+<body>
+<div id="main">
+	<div id="source">
+		<span id="source-icon" class="source-icon fa fa-map-pin" draggable="true" ondragstart="drag(event)"><br /><textarea placeholder="在这里输入景点" class="title" cols="3" rows="2" maxlength="8"/></textarea>
+		</div>
+		<div id="target"></div>
+	</div>
+	</body>
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script>
 var target = document.getElementById("target");
 
 
-for(var i = 0;i<=100;i++){
+for(var i = 1;i<=50;i++){
 	var tr = document.createElement("div");
 	tr.className = "target";
 	tr.id = "target"  +  i;
@@ -53,6 +93,7 @@ for(var j in oTr){
 	};
 	oTr[j].ondrop = function (event){
 		drop(event);
+		this.getElementsByClassName("title")[0].title="继续编辑";
 	};	
 
 };
@@ -71,4 +112,4 @@ function drop(ev) {
 	ev.target.appendChild(document.getElementById(data));
 }
 	</script>
-</html>
+	</html>
