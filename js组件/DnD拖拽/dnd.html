@@ -39,7 +39,7 @@
 var target = document.getElementById("target");
 
 
-for(var i = 0;i<100;i++){
+for(var i = 0;i<=100;i++){
 	var tr = document.createElement("div");
 	tr.className = "target";
 	tr.id = "target"  +  i;
@@ -70,6 +70,5 @@ function drop(ev) {
 	var data = ev.dataTransfer.getData("text");
 	ev.target.appendChild(document.getElementById(data));
 }
-
 	</script>
 </html>
