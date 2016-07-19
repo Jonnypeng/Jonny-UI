@@ -41,12 +41,15 @@
 	line-height: 22px;
 	font-weight:bold;
 }
+#target .title{
+	color:blue;
+}
 .target{
 	float:left;
 	width:80px;
 	height:80px;
 	line-height:80px;
-	border:0.5px #a2a2a2;
+	border:1px #a2a2a2;
 	text-align: center;
 	box-sizing: border-box;
 	border-style: dashed;
@@ -69,7 +72,7 @@ textarea.title{
 }
 
 textarea::-webkit-input-placeholder{
-	color:#eee;
+	color:gray;
 }
 
 
@@ -79,7 +82,7 @@ textarea::-webkit-input-placeholder{
 <div id="main">
 	<div id="source" ondragover="allowDrop(event)" ondrop="drop(event)">
 			<button	id="create">创建景点</button>
-		<span id="source-icon" class="source-icon fa fa-map-pin" title="选中按Delete删除"><br /><textarea placeholder="直接输入景点" class="title" cols="3" rows="2" maxlength="8"/></textarea></span>
+		<span id="source-icon" class="source-icon fa fa-map-pin" title="直接输入景点名称，也选中按Delete删除"><br /><textarea placeholder="直接输入景点" class="title" cols="3" rows="2" maxlength="8"/></textarea></span>
 		</div>
 		<div id="target"></div>
 	</div>
@@ -131,7 +134,7 @@ function make(){													//创建元素
 	source.id="source-icon"+sNum;
 	source.title = "选中按Delete删除";
 	source.className="source-icon fa fa-map-pin";
-	source.innerHTML ="<br /><textarea placeholder=\"在这里输入景点\" class=\"title\" cols=\"3\" rows=\"2\" maxlength=\"8\"/>";
+	source.innerHTML ="<br /><textarea placeholder=\"直接输入景点\" class=\"title\" cols=\"3\" rows=\"2\" maxlength=\"8\"/>";
 	source.draggable = true;
 	document.getElementById("source").appendChild(source);
 	onMake();															//回调遍历函数	
