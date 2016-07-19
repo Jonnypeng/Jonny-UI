@@ -73,7 +73,7 @@ textarea.title{
 <div id="main">
 	<div id="source">
 			<button	id="create">创建景点</button>
-		<span id="source-icon" class="source-icon fa fa-map-pin"><br /><textarea placeholder="在这里输入景点" class="title" cols="3" rows="2" maxlength="8"/></textarea></span>
+		<span id="source-icon" class="source-icon fa fa-map-pin" title="选中按Delete删除"><br /><textarea placeholder="在这里输入景点" class="title" cols="3" rows="2" maxlength="8"/></textarea></span>
 		</div>
 		<div id="target"></div>
 	</div>
@@ -108,9 +108,11 @@ sourceIcon[i].index = i;
 sourceIcon[i].ondragstart = function dragstart(event){
 	drag(event);														//拖拽准备
 };
-sourceIcon[i].onclick = function (){
-		this.parentElement.removeChild(this);			//点击本元素删除本元素
-};
+sourceIcon[i].onkeydown =  function (){
+		if(event.keyCode==46){										//按delete删除本元素
+		this.parentElement.removeChild(this);
+		};
+	};
 };
 };
 
@@ -118,7 +120,7 @@ function make(){													//创建元素
 	sNum+=1;
 	var source = document.createElement("span");
 	source.id="source-icon"+sNum;
-	source.title = "点击删除";
+	source.title = "选中按Delete删除";
 	source.className="source-icon fa fa-map-pin";
 	source.innerHTML ="<br /><textarea placeholder=\"在这里输入景点\" class=\"title\" cols=\"3\" rows=\"2\" maxlength=\"8\"/>";
 	source.draggable = true;
