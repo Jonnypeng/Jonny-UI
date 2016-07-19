@@ -76,51 +76,56 @@ textarea.title{
 	</body>
 	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script>
-var target = document.getElementById("target");
+var sourceIcon = document.getElementsByClassName("source-icon");		//拖放源
+var target = document.getElementById("target");  //大目标范围
+var sNum = 0;  //设置拖拽源的值为0
 
-
-for(var i = 1;i<=50;i++){
+for(var i = 1;i<=50;i++){                      //创建拖拽目标的定位宫格
 	var tr = document.createElement("div");
 	tr.className = "target";
 	tr.id = "target"  +  i;
+	tr.ondragover = function (event){           //允许拖拽设置
+		allowDrop(event);
+	};	
+	tr.ondrop = function (event){								//拖拽动作
+		drop(event);
+	};
 	target.appendChild(tr);
 };
-
-var oTr	= document.getElementsByClassName("target");
-for(var j in oTr){
-	oTr[j].ondragover = function(event){
-		allowDrop(event);
-	};
-	oTr[j].ondrop = function (event){
-		drop(event);
-		this.getElementsByClassName("title")[0].title="继续编辑";
-	};	
-
+sourceIcon[0].draggable = true;  					//初始化拖拽
+onMake();
+function onMake(){
+for(var i in sourceIcon){
+sourceIcon[i].index = i;
+sourceIcon[i].ondragstart = function dragstart(event){
+	drag(event);														//拖拽准备
+	make();
+	sourceIcon[this.index].draggable = false;  					//允许拖拽
+	sourceIcon[this.index].ondragstart = false;  					//允许拖拽
+};
+};
 };
 
-function allowDrop(ev) {
-	ev.preventDefault();
-}
-var sourceIcon = document.getElementsByClassName("source-icon");
-var sNum = 0;
-dragstart();
-function dragstart(event){
-for(var k in sourceIcon){
-sourceIcon[k].draggable=true;
-sourceIcon[k].ondragstart = function (event){
-	event.dataTransfer.setData("text", event.target.id);
+function make(){													//创建元素
 	sNum+=1;
-	console.log(sNum);
 	var source = document.createElement("span");
 	source.id="source-icon"+sNum;
 	source.className="source-icon fa fa-map-pin";
 	source.innerHTML ="<br /><textarea placeholder=\"在这里输入景点\" class=\"title\" cols=\"3\" rows=\"2\" maxlength=\"8\"/>";
+	source.draggable = true;
 	document.getElementById("source").appendChild(source);
-dragstart();
+	onMake();															//回调遍历函数	
 };
-};
-};
-function drop(ev) {
+
+function drag(ev){														//拖拽准备
+	ev.dataTransfer.setData("text",event.target.id);
+}     
+
+function allowDrop(ev) {                 //允许拖拽，清理默认
+	ev.preventDefault();
+}
+
+function drop(ev) {											//拖拽动作实现并完成数据接收	
 	ev.preventDefault();
 	var data = ev.dataTransfer.getData("text");
 	ev.target.appendChild(document.getElementById(data));
