@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
 <style>
 #main{
-	margin:auto;
+	margin:40px auto;
 	width:900px;
 	height:400px;
 }
@@ -21,9 +21,8 @@
 	width: 100px;
 	float: left;
 	text-align: center;
-	height: 100px;
-	margin: 150px auto;
-	line-height: 100px;
+	height: 400px;
+	overflow-y:scroll;
 }
 .source-icon{
 	color:gray;
@@ -31,6 +30,7 @@
 }
 .source-icon .title{
 	font-size:x-small;
+	color:black;
 }
 
 #target .source-icon{
@@ -64,12 +64,16 @@ textarea.title{
 	resize:none;
 	overflow:hidden;
 }
+#source button,#source span{
+	margin:10px 0px;
+}
 </style>
 </head>
 <body>
 <div id="main">
 	<div id="source">
-		<span id="source-icon" class="source-icon fa fa-map-pin"><br /><textarea placeholder="在这里输入景点" class="title" cols="3" rows="2" maxlength="8"/></textarea>
+			<button	id="create">创建景点</button>
+		<span id="source-icon" class="source-icon fa fa-map-pin"><br /><textarea placeholder="在这里输入景点" class="title" cols="3" rows="2" maxlength="8"/></textarea></span>
 		</div>
 		<div id="target"></div>
 	</div>
@@ -78,7 +82,12 @@ textarea.title{
 	<script>
 var sourceIcon = document.getElementsByClassName("source-icon");		//拖放源
 var target = document.getElementById("target");  //大目标范围
+var create = document.getElementById("create");		//创建
 var sNum = 0;  //设置拖拽源的值为0
+
+create.onclick = function (){									//点击创建函数
+	make();
+};
 
 for(var i = 1;i<=50;i++){                      //创建拖拽目标的定位宫格
 	var tr = document.createElement("div");
@@ -96,12 +105,11 @@ sourceIcon[0].draggable = true;  					//初始化拖拽
 onMake();
 function onMake(){
 for(var i in sourceIcon){
+
 sourceIcon[i].index = i;
+
 sourceIcon[i].ondragstart = function dragstart(event){
 	drag(event);														//拖拽准备
-	make();
-	sourceIcon[this.index].draggable = false;  					//允许拖拽
-	sourceIcon[this.index].ondragstart = false;  					//允许拖拽
 };
 };
 };
