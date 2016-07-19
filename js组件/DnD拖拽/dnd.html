@@ -78,7 +78,6 @@ textarea.title{
 		<div id="target"></div>
 	</div>
 	</body>
-	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script>
 var sourceIcon = document.getElementsByClassName("source-icon");		//拖放源
 var target = document.getElementById("target");  //大目标范围
@@ -105,11 +104,12 @@ sourceIcon[0].draggable = true;  					//初始化拖拽
 onMake();
 function onMake(){
 for(var i in sourceIcon){
-
 sourceIcon[i].index = i;
-
 sourceIcon[i].ondragstart = function dragstart(event){
 	drag(event);														//拖拽准备
+};
+sourceIcon[i].onclick = function (){
+		this.parentElement.removeChild(this);			//点击本元素删除本元素
 };
 };
 };
@@ -118,6 +118,7 @@ function make(){													//创建元素
 	sNum+=1;
 	var source = document.createElement("span");
 	source.id="source-icon"+sNum;
+	source.title = "点击删除";
 	source.className="source-icon fa fa-map-pin";
 	source.innerHTML ="<br /><textarea placeholder=\"在这里输入景点\" class=\"title\" cols=\"3\" rows=\"2\" maxlength=\"8\"/>";
 	source.draggable = true;
