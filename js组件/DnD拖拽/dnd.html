@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
 <style>
 #main{
-	margin:40px auto;
+	margin:15px auto;
 	width:900px;
 	height:400px;
 }
@@ -15,7 +15,7 @@
 	width:800px;
 	height:400px;
 	background:url(map.png);
-
+	overflow:hidden;
 }
 #source{
 	width: 100px;
@@ -75,24 +75,47 @@ textarea::-webkit-input-placeholder{
 	color:gray;
 }
 
+#footer{
+	width: 870px;
+	height: 20px;
+	margin: 15px auto;
+	padding:15px;
+	background: #5d5d5d;
+	color: #ffffff;
+}
+#file{
+	float:right;
+}
+
+#help{
+	vertical-align: -webkit-baseline-middle;
+}
+#upload{
+	width: 170px;
+}
 
 </style>
 </head>
 <body>
 <div id="main">
 	<div id="source" ondragover="allowDrop(event)" ondrop="drop(event)">
-			<button	id="create">创建景点</button>
+		<button	id="create">创建景点</button>
 		<span id="source-icon" class="source-icon fa fa-map-pin" title="直接输入景点名称，也选中按Delete删除"><br /><textarea placeholder="直接输入景点" class="title" cols="3" rows="2" maxlength="8"/></textarea></span>
-		</div>
-		<div id="target"></div>
 	</div>
-	</body>
-	<script>
+	<div id="target"></div>
+</div>
+<div id="footer">
+	<span id="help"><small>使用备注：选中元素可直接进行编辑，也可以按Delete键直接进行删除，背景图的尺寸为600px*400px</small></span>
+	<div id="file"><input id="upload"	type="file"><input id="submit" type="submit"></div>
+</div>
+</body>
+<script>
 var sourceIcon = document.getElementsByClassName("source-icon");		//拖放源
 var target = document.getElementById("target");  //大目标范围
 var create = document.getElementById("create");		//创建
 var sNum = 0;  //设置拖拽源的值为0
 var textarea = document.getElementsByTagName("textarea");
+var upload = document.getElementById("upload");
 create.onclick = function (){									//点击创建函数
 	make();
 };
@@ -112,20 +135,20 @@ for(var i = 1;i<=50;i++){                      //创建拖拽目标的定位宫�
 sourceIcon[0].draggable = true;  					//初始化拖拽
 onMake();
 function onMake(){
-for(var i in sourceIcon){
-sourceIcon[i].index = i;
-sourceIcon[i].ondragstart = function dragstart(event){
-	drag(event);														//拖拽准备
-};
-textarea[i].onfocus = function (){
-	this.placeholder="";
-}
-sourceIcon[i].onkeydown =  function (){
-		if(event.keyCode==46){										//按delete删除本元素
-		this.parentElement.removeChild(this);
+	for(var i in sourceIcon){
+		sourceIcon[i].index = i;
+		sourceIcon[i].ondragstart = function dragstart(event){
+			drag(event);														//拖拽准备
+		};
+		textarea[i].onfocus = function (){
+			this.placeholder="";
+		}
+		sourceIcon[i].onkeydown =  function (){
+			if(event.keyCode==46){										//按delete删除本元素
+				this.parentElement.removeChild(this);
+			};
 		};
 	};
-};
 };
 
 function make(){													//创建元素
@@ -153,5 +176,8 @@ function drop(ev) {											//拖拽动作实现并完成数据接收
 	var data = ev.dataTransfer.getData("text");
 	ev.target.appendChild(document.getElementById(data));
 }
-	</script>
-	</html>
+upload.addEventListener("dragstart",drag,false);
+upload.addEventListener("dragover",allowDrop,false);
+upload.addEventListener("drop",drop,false);
+</script>
+</html>
