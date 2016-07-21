@@ -35,13 +35,13 @@ ul li{
 	color:black;
 	text-align:center;
 	line-height:50px;
-	width: 101px;
+	width: 102px;
 	height: 50px;
-	border: 1px orange solid;
-	margin: 5px 0px 0px 0px;
+	border: 1px orange dashed;
 	display:inline-block;
 }
 #seat_num_choiced{
+	border:1px dashed gray;
 	margin-top:10px;
 }
 #seat_sumbit{
@@ -84,7 +84,7 @@ span.fa-check-circle{
 #seat_detail{
 	width: 587px;
 	height: 446px;
-	    text-align: center;
+	text-align: center;
 }
 .numIcon {
 	display: inline-block;
@@ -100,6 +100,17 @@ span.fa-check-circle{
 }
 .sofa{
 	vertical-align:middle;
+	cursor:pointer;
+}
+#seat_none{
+	padding: 15px 10px;
+}
+#seat_none small{
+	color:gray;	
+}
+input.un_submit{
+	background:#c5c3c3;
+	color:#fff;
 }
 </style>
 </head>
@@ -126,25 +137,32 @@ span.fa-check-circle{
 		<div id="seat_num">
 			<dt>座位：</dt>
 			<div id="seat_num_choiced">
-				<div class="seat_num_dd">5排01号<span class="fa fa-check-circle"></span></div>
-				<div class="seat_num_dd">5排02号<span class="fa fa-check-circle"></span></div>
-				<div class="seat_num_dd">5排03号<span class="fa fa-check-circle"></span></div>
-				<div class="seat_num_dd">5排04号<span class="fa fa-check-circle"></span></div>		
+				<div id="seat_none"><strong>未选择座位</strong><br /><small>请先在左侧选座</small></div>
 			</div>
 		</div>
-		<div id="seat_sumbit"><input type="submit" value="立即购买" /></div>
+		<div id="seat_sumbit" ><input id="buy" class="un_submit" type="submit" value="立即购买" /></div>
 	</div>
 </div>
 <script>
-var	seatDe = document.getElementById("seat_detail"); 
-var seatNum = 251;
-var rows = 1;
-window.addEventListener("load",mkSeat,false);
+var $ = function (id){
+	return document.getElementById(id);
+};
 
-function mkSeat(){
+var $c = function(classname){
+	return document.getElementsByClassName(classname);
+};
+var buyBtn = $("buy");
+var seatChoiced = $("seat_num_choiced");
+var	seatDe = document.getElementById("seat_detail"); 	//座位区域	
+var seatNum = 251;									//座位
+var rows = 1;
+var seatNone = $("seat_none");
+var sofaType = {"unchoice":"icons/unchoice.svg","choiced":"icons/choice.svg","sales":"icons/sales.svg"};
+window.addEventListener("load",mkSeat,false);			//载入后，自动创建座位
+
+function mkSeat(){									//批量创建元素	
 	for(var i = 0;i<=seatNum;i++){
 		if(i%18==0){
-			console.log(rows);	
 			var span = document.createElement("span");	
 			span.className = "numIcon";
 			span.innerHTML = rows;
@@ -152,12 +170,49 @@ function mkSeat(){
 			rows+=1;
 		}else{
 			var sofa = document.createElement("img");	
-			sofa.src="icons/unchoice.svg";
+			sofa.src=sofaType.unchoice;
 			sofa.className="sofa";
+			sofa.title=rows-1 + "排" + i%18 + "号";
+			sofa.addEventListener("click",choice,false);		//绑定点击沙发的事件
+			sofa.chOff = true;  //先设置为可选模式
 			seatDe.appendChild(sofa);
 		}
 	};
 };
+
+var choicedArr = [];
+var caNum = -1;
+var caSum = 0;
+
+function choice(){
+	if(this.chOff){
+		caNum++;
+		this.src = sofaType.choiced;				//改变已选模式的图标	
+		this.chOff = false;
+		choicedArr.push(this.title);				//向数组推送元素
+		console.log(choicedArr);
+		this.num =	caNum; 									//为事件元素设置属性与数组下标同步
+		console.log(this.num);
+		var	seatDD = document.createElement("div"); 
+		seatDD.className = "seat_num_dd";
+		seatDD.id = this.num;
+		seatDD.innerHTML = this.title + "<span class=\"fa fa-check-circle\"></span>";
+		seatChoiced.appendChild(seatDD);
+		seatNone.style.display = "none";		//点击位置，卸载默认样式
+		buyBtn.removeAttribute("class");		//点击位置，卸载默认样式
+	}else{
+		this.src = sofaType.unchoice;       //改变为未选模式的图标	
+		this.chOff = true;
+		delete choicedArr[this.num];				//删除元素下标位置的数组元素
+		seatChoiced.removeChild($(this.num));
+		console.log(seatChoiced.childNodes.length);
+		if(seatChoiced.childNodes.length==3){			//判断已选择位置的容器下的子节点长度为3,就是空，进行逻辑动作
+			seatNone.style.display = "block";				//为空，恢复默认样式
+			buyBtn.setAttribute("class","un_submit");   //为空，恢复默认样式				
+		};
+	};
+};
+
 </script>
 </body>
 </html>
