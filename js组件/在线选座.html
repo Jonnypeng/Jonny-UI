@@ -35,13 +35,15 @@ ul li{
 	color:black;
 	text-align:center;
 	line-height:50px;
-	width: 102px;
+	width: 62.2px;
 	height: 50px;
 	border: 1px orange dashed;
 	display:inline-block;
 }
 #seat_num_choiced{
-	border:1px dashed gray;
+	    height: 208px;
+			    overflow: auto;
+	/*border:1px dashed gray;*/
 	margin-top:10px;
 }
 #seat_sumbit{
@@ -196,7 +198,7 @@ function choice(){
 		var	seatDD = document.createElement("div"); 
 		seatDD.className = "seat_num_dd";
 		seatDD.id = this.num;
-		seatDD.innerHTML = this.title + "<span class=\"fa fa-check-circle\"></span>";
+		seatDD.innerHTML = "<small>" + this.title + "</small>" + "<span class=\"fa fa-check-circle\"></span>";
 		seatChoiced.appendChild(seatDD);
 		seatNone.style.display = "none";		//点击位置，卸载默认样式
 		buyBtn.removeAttribute("class");		//点击位置，卸载默认样式
