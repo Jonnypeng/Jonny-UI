@@ -162,7 +162,8 @@ var seatNone = $("seat_none");
 var sofaType = {"unchoice":"icons/unchoice.svg","choiced":"icons/choice.svg","sold":"icons/sales.svg"};
 var seatArr = {
 chose:[],
-sold:[]
+sold:[],
+cart:[]
 };
 window.addEventListener("load",mkSeat,false);			//载入后，自动创建座位
 buyBtn.addEventListener("click",success,false);
@@ -221,7 +222,18 @@ function choice(){
 };
 
 function success(){
-		choicedArr.forEach(function (e){seatArr.sold.push(e)});			//推送数据到已经购买的数组
+		var r = confirm("亲，您确认要购买吗？");	
+		if(r==true){
+				ok();	
+		}else{
+				return;	
+		}
+		function ok(){
+		seatArr.cart.splice(0,seatArr.cart.length);				//清空购物车的数据
+		choicedArr.forEach(function (e){
+				seatArr.cart.push(e);													//推送购物车的数据
+				seatArr.sold.push(e)													//推送已经售出的数据
+				});		
 		seatArr.sold.forEach(function (e){
 				sofa[seatArr.chose.indexOf(e)].src=sofaType.sold;				//绑定已购买的数组调用到可选择的数组找出序列引用到所有沙发的位置进行更改
 				sofa[seatArr.chose.indexOf(e)].removeEventListener("click",choice,false);					//解除点击事件的绑定
@@ -229,12 +241,14 @@ function success(){
 				});
 		//console.log(seatArr.sold);
 		choicedArr.splice(0,choicedArr.length);
-		console.log(choicedArr);
+		//console.log(choicedArr);
 		seatChoiced.innerHTML = "";
 		seatChoiced.appendChild(seatNone);
 		seatNone.style.display = "block";				//为空，恢复默认样式
-		this.setAttribute("class","un_submit");   //为空，恢复默认样式				
-		console.log(seatArr.sold);
+		buyBtn.setAttribute("class","un_submit");   //为空，恢复默认样式				
+		console.log("购物车数据",seatArr.cart);
+		console.log("已经售出的票的总数据",seatArr.sold);
+				};
 }
 </script>
 </body>
