@@ -9,6 +9,7 @@ var buyBtn = $("buy");
 var seatChoiced = $("seat_num_choiced");
 var	seatDe = document.getElementById("seat_detail"); 	//座位区域	
 var seatNum = 251;									//座位
+var priceTotal = 0;
 var rows = 1;
 var seatNone = $("seat_none");
 var sofaType = {"unchoice":{a:"icons/unchoice-a.svg",b:"icons/unchoice-b.svg",c:"icons/unchoice-c.svg",},"choiced":"icons/choice.svg","sold":"icons/sales.svg"};
@@ -16,7 +17,8 @@ var seatArr = {
 	chose:[],			//所有座位	
 	sold:[],			//已经售出的座位
 	cart:[],				//购买成功提交的座位		
-	price:[]     //购物车内的每个座位的价格
+	price:[],    //购物车内的每个座位的价格
+	total:[]		//总共的票数销售额
 };
 window.addEventListener("load",mkSeat,false);			//载入后，自动创建座位
 buyBtn.addEventListener("click",success,false);
@@ -70,6 +72,8 @@ function choice(){
 		this.src = sofaType.choiced;				//改变已选模式的图标	
 		this.chOff = false;
 		choicedArr.push(this.seatName);				//向数组推送元素
+		seatArr.price.push(this.price);       //为购物车数组推送数据
+		//console.log(seatArr.price);
 		this.num =	caNum; 									//为事件元素设置属性与数组下标同步
 		var	seatDD = document.createElement("div"); 
 		seatDD.className = "seat_num_dd";
@@ -82,6 +86,8 @@ function choice(){
 		this.src = this.icon;       //改变为未选模式的图标	
 		this.chOff = true;
 		delete choicedArr[this.num];				//删除元素下标位置的数组元素
+		delete seatArr.price[this.num];			//删除购物车数组的对应价格数据
+		//console.log(seatArr.price);
 		seatChoiced.removeChild($(this.num));
 		if(seatChoiced.childNodes.length==3){			//判断已选择位置的容器下的子节点长度为3,就是空，进行逻辑动作
 			seatNone.style.display = "block";				//为空，恢复默认样式
@@ -89,13 +95,22 @@ function choice(){
 		};
 	};
 };
-function success(){
-	var r = confirm("亲，您确认要购买吗？");	
+function success(){				//验证是否确认购买
+	var CPT = cartPrice();
+	var r = confirm("亲，" + "您将支付" + CPT + "元" + ",确认要购买吗？" );	
 	if(r==true){
 		ok();	
 	}else{
 		return;	
 	}
+	function cartPrice(){			//购物车价格计算
+		var cartPriceTotal = 0;
+		seatArr.price.forEach(function(e){
+			cartPriceTotal+=e;
+		});
+		return cartPriceTotal;
+		console.log("每次的购物车价格总计",cartPriceTotal);
+	};
 	function ok(){
 		seatArr.cart.splice(0,seatArr.cart.length);				//清空购物车的数据
 		choicedArr.forEach(function (e){
@@ -110,11 +125,17 @@ function success(){
 		//console.log(seatArr.sold);
 		choicedArr.splice(0,choicedArr.length);
 		//console.log(choicedArr);
+		seatArr.total = seatArr.total.concat(seatArr.price);	//价格总计合并购物车的数据
+		seatArr.total.forEach(function (e){
+		priceTotal+=e; 	
+		});
+		seatArr.price.splice(0,seatArr.price.length);		//清空购物车价格
 		seatChoiced.innerHTML = "";
 		seatChoiced.appendChild(seatNone);
 		seatNone.style.display = "block";				//为空，恢复默认样式
-		buyBtn.setAttribute("class","un_submit");   //为空，恢复默认样式				
+		console.log("总售价格组成",seatArr.total);
 		console.log("购物车数据",seatArr.cart);
 		console.log("已经售出的票的总数据",seatArr.sold);
+		console.log("已经售出的销售额",priceTotal);
 	};
 }
