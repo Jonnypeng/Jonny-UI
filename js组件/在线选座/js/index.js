@@ -78,7 +78,7 @@ function choice(){
 		var	seatDD = document.createElement("div"); 
 		seatDD.className = "seat_num_dd";
 		seatDD.id = this.num;
-		seatDD.innerHTML = "<small>" + this.seatName + "</small>" + "<span class=\"fa fa-check-circle\"></span>";
+		seatDD.innerHTML = "<small>" + this.seatName + "</small><br>" +	"<small>" + this.type + "</small><br>" +"<small class=\"price\">" + this.price + "元" +"</small>" + "<span class=\"fa fa-check-circle\"></span>";
 		seatChoiced.appendChild(seatDD);
 		seatNone.style.display = "none";		//点击位置，卸载默认样式
 		buyBtn.removeAttribute("class");		//点击位置，卸载默认样式

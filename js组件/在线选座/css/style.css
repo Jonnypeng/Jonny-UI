@@ -27,9 +27,9 @@ ul li{
 .seat_num_dd{
 	color:black;
 	text-align:center;
-	line-height:50px;
+	line-height:30px;
 	width: 62.2px;
-	height: 50px;
+	height: 90px;
 	border: 1px orange dashed;
 	display:inline-block;
 }
@@ -54,7 +54,7 @@ input[type="submit"]{
 }
 span.fa-check-circle{
 	float: right;
-	margin-top: 35px;
+	margin-top: 10px;
 	color: orange;
 	margin-left: -15px;
 }
@@ -106,4 +106,9 @@ span.fa-check-circle{
 input.un_submit{
 	background:#c5c3c3;
 	color:#fff;
+}
+
+.price{
+	color:red;
+	font-weight:bold;
 }
