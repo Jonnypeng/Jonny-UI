@@ -17,7 +17,7 @@
    enable-background="new 0 0 32 32"
    xml:space="preserve"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="unchoice-a.svg"><metadata
+   sodipodi:docname="unchoice-b.svg"><metadata
      id="metadata9"><rdf:RDF><cc:Work
          rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
@@ -58,5 +58,5 @@
        id="tspan3055"
        x="10.479664"
        y="16.649584"
-       style="fill:#ffffff">乙</tspan></text>
+       style="fill:#000080">乙</tspan></text>
 </svg>
