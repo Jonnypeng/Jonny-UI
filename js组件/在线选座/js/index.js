@@ -1,4 +1,4 @@
-var $ = function (id){
+var $ = function (id) {
 	return document.getElementById(id);
 };
 
@@ -11,6 +11,8 @@ var	seatDe = document.getElementById("seat_detail"); 	//座位区域
 var seatNum = 251;									//座位
 var priceTotal = 0;
 var rows = 1;
+var cartInfo1 = document.getElementById("cartInfo1");	//提交订单的购物车信息
+var cartInfo2 = document.getElementById("cartInfo2");	//提交订单的购物车总计价格
 var seatNone = $("seat_none");
 var sofaType = {"unchoice":{a:"icons/unchoice-a.svg",b:"icons/unchoice-b.svg",c:"icons/unchoice-c.svg",},"choiced":"icons/choice.svg","sold":"icons/sales.svg"};
 var seatArr = {
@@ -97,7 +99,7 @@ function choice(){
 };
 function success(){				//验证是否确认购买
 	var CPT = cartPrice();
-	var r = confirm("亲，" + "您将支付" + CPT + "元" + ",确认要购买吗？" );	
+	var r = confirm("亲，" + "您将支付" + CPT + "元" + ",确认要提交订单吗？" );	
 	if(r==true){
 		ok();	
 	}else{
@@ -109,7 +111,7 @@ function success(){				//验证是否确认购买
 			cartPriceTotal+=e;
 		});
 		return cartPriceTotal;
-		console.log("每次的购物车价格总计",cartPriceTotal);
+		//console.log("每次的购物车价格总计",cartPriceTotal);
 	};
 	function ok(){
 		seatArr.cart.splice(0,seatArr.cart.length);				//清空购物车的数据
@@ -130,12 +132,14 @@ function success(){				//验证是否确认购买
 		priceTotal+=e; 	
 		});
 		seatArr.price.splice(0,seatArr.price.length);		//清空购物车价格
+		cartInfo1.value = seatChoiced.innerHTML;  //表单购物车细节	
+		cartInfo2.value =	CPT;  //表单购物车总价 
 		seatChoiced.innerHTML = "";
 		seatChoiced.appendChild(seatNone);
 		seatNone.style.display = "block";				//为空，恢复默认样式
-		console.log("总售价格组成",seatArr.total);
-		console.log("购物车数据",seatArr.cart);
-		console.log("已经售出的票的总数据",seatArr.sold);
-		console.log("已经售出的销售额",priceTotal);
+		//console.log("总售价格组成",seatArr.total.join("-"));
+		//console.log("购物车数据",seatArr.cart.join("-"));
+		//console.log("已经售出的票的总数据",seatArr.sold);
+		//console.log("已经售出的销售额",priceTotal);
 	};
 }

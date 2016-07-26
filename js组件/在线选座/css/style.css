@@ -112,3 +112,36 @@ input.un_submit{
 	color:red;
 	font-weight:bold;
 }
+
+#cartBuyInfo{
+	margin-top:15px;
+	height:446px;
+	overflow:auto;
+}
+#total{
+	text-align: center;
+	height: 100px;
+	background: #ff8b01;
+	line-height: 100px;
+	color: white;
+	font-weight: bolder;
+	top: 100px;
+	position: relative;
+}
+#pay{
+width:210px;
+    position: relative;
+    top: 120px;
+}
+
+#alipay{
+width:210px;
+float:left;
+text-align:center;
+}
+
+#pay img{
+width:100%;
+height:auto;
+cursor:pointer;
+}

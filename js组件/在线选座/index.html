@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>购票前台</title>
 <link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -32,7 +32,10 @@
 				<div id="seat_none"><strong>未选择座位</strong><br /><small>请先在左侧选座</small></div>
 			</div>
 		</div>
-		<div id="seat_sumbit" ><input id="buy" class="un_submit" type="submit" value="立即购买" /></div>
+		<form id="seat_sumbit" action="admin.php" method="post">
+			<input id="cartInfo1" type="hidden" name="seat" value="">
+			<input id="cartInfo2" type="hidden" name="total" value="">
+			<input id="buy" class="un_submit" type="submit" value="提交订单" /></form>
 	</div>
 </div>
 <script src="js/index.js"></script>
