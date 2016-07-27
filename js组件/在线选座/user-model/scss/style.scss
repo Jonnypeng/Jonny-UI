@@ -1,0 +1,249 @@
+html, body{ height:1; background:#f1f1f1; font:14px Arial; height:100%; }
+
+body > button{ float:right; font-size:1.2em; margin:10px 20px 10px 1em; width:100px; }
+
+.grid{
+    $gap           : 6px;
+    $gridLinecolor : rgba(black, .16);
+
+
+    //box-shadow:0 0 10px -4px #BBB;
+    background: #FFF;
+    border: 1px solid transparent;
+
+    /////////////////////////////////////////////
+    top    : 50px;
+    bottom : 20px;
+    left   : 20px;
+    right  : 20px;
+    position: absolute;
+    //////////////////////////////////////////////
+
+    user-select:none;
+    user-drag: auto;
+
+    // when an area is being dragged
+    &.dragged{
+        cursor:grabbing;
+    }
+
+    ///////////////////////////////////
+    // Grid lines
+    &__h-lines{
+        pointer-events:none;
+        position: absolute;
+        top:0; bottom:0; left:0; right:0;
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+
+        .grid__line{
+            height:1px;
+            background: $gridLinecolor;
+        }
+    }
+
+    &__v-lines{
+        pointer-events:none;
+        position: absolute;
+        top:0; bottom:0; left:0; right:0;
+        display: flex;
+        justify-content: space-between;
+
+        .grid__line{
+            width:1px;
+            background: $gridLinecolor;
+        }
+    }
+
+    &__item{
+        display: none;
+        //  width:#{(100 / $columns) + '%'};
+        transition: 30ms;;
+        position:relative;
+        user-select:none;
+
+        &.selected{
+            background: #E3F1F7 !important;
+            transition: 0s;
+
+            &.overlap{ background: #F4E1E1; }
+        }
+    }
+
+    &__area{
+        position:absolute;
+        z-index:5;
+        cursor:pointer;
+        margin: $gap;
+        outline-offset: -2px;
+        transition: 150ms ease-out;
+
+
+        &:hover{
+         // background:lighten(#E3F1F7, 3);
+            .resize{
+                // &::after{ display:block; }
+            }
+        }
+
+        &.removed{
+            transition:.2s ease-out;
+            opacity:0;
+            transform:scale(.96);
+        }
+
+        &--selection{
+            z-index: 10;
+            opacity: .5;
+            transition:all 50ms, outline 150ms;
+
+            > *{ display:none; }
+        }
+
+        &--dummy{
+            position:absolute;
+            z-index: 3;
+            background: rgba(200,200,200, .15);
+            box-shadow:none;
+            transition:0s;
+        }
+
+        &--empty{
+            background: rgba(white, .8);
+            outline: 2px dashed #999;
+
+            footer{
+                position:absolute;
+                bottom:2px;
+                left:2px;
+                right: 2px;
+                height: 50px;
+            }
+        }
+
+        &--invalid{
+            outline: 2px dashed #E25A5A;
+            box-shadow: 0 0 0 4px rgba(#E25A5A, .3) inset;
+        }
+
+        &--resized{
+            transition:0s;
+        }
+
+        &--dragged{
+            opacity: .6;
+            z-index: 20;
+            // transform:rotate(1.5deg);
+            -moz-user-select:none;
+            // box-shadow:0 0 17px rgba(black, .3);
+            cursor:grabbing;
+            transition:0s;
+
+            .grid__area__reposition{
+                opacity: 1;
+                color: #63A5C6;
+            }
+        }
+
+        &--snapBack{
+            transition:.25s cubic-bezier(0.17, 0.8, 0.3, 1.08);
+        }
+
+        .add{
+            $margin: 0px;
+            font-size: 3em;
+            position: absolute;
+            font-weight: 800;
+            opacity: .2;
+
+            height: calc(100% - #{$margin * 2});
+            width: calc(100% - #{$margin * 2});
+            margin: $margin;
+            padding:0;
+
+            transition: background .1s;
+
+            &:hover{
+                color: #5FC3FC;
+                opacity: 1;
+                background: rgba(#5FC3FC, .1);
+            }
+        }
+
+        &--tbd{
+            outline: 2px dashed #5FC3FC;
+            .add{
+                color:rgba(white, 0) !important;
+                background:rgba(#5FC3FC, .1) !important;
+                opacity:1 !important;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                font-size: 0;
+                transition:.25s;
+            }
+        }
+
+        &__removeBtn{
+            position:absolute;
+            background: none;
+            border:0;
+            top: 0px;
+            right: 0px;
+            // box-shadow: 0 -6px 8px -7px rgba(0,0,0, .1);
+            font-size: 1.4rem;
+            font-family: serif;
+            text-align: center;
+
+            &:hover{ color:#E02F2C; }
+            &:active{ color:#E02F2C; }
+        }
+
+        // repositioning icon
+        &__reposition{
+            background: linear-gradient(#FFF 50%, #555 100%);
+            background-size: 1px 3px;
+            position:absolute;
+            top: 6px;
+            left: 6px;
+            width:30px;
+            height:10px;
+            opacity: .6;
+            cursor:grab;
+            user-select:none;
+            transition:.1s;
+
+            &:hover{
+                opacity: 1;
+            }
+        }
+
+        .resize {
+            $circleSize : 5px;
+            $barSize    : 4px;
+
+            position:absolute;
+            cursor:n-resize;
+            //transition:.1s;
+
+            &::after{ display:none; content:''; padding:$circleSize; border-radius:$circleSize; background:white; box-shadow:0 0 0 1px #AAA inset; position:absolute; }
+
+            &:hover,
+            &.active{ background:#63A5C6; }
+
+            &--top{ width:100%; height:$barSize;
+                &::after{ top:-$circleSize; left:50%; margin-left:-$circleSize; }
+            }
+            &--right{ right:0; height:100%; width:$barSize; cursor:e-resize;
+                &::after{ right:-$circleSize + 1; top:50%; margin-top:-$circleSize; }
+            }
+            &--bottom{ bottom:0; width:100%; height:$barSize;
+                &::after{ bottom:-$circleSize; left:50%; margin-left:-$circleSize; }
+            }
+            &--left{ left:0; height:100%; width:$barSize; cursor:e-resize;
+                &::after{ left:-$circleSize + 1; top:50%; margin-top:-$circleSize; }
+            }
+        }
+    }
+}
