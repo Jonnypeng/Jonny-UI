@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>创建座位</title>
+		<script src="jquery-2.1.0.js"></script>
+		<style>
+			body{margin:0;padding:0;}
+			h1{text-align:center;border-bottom:solid 1px #000;}
+			#information{border:solid 1px #f00;margin:15px;padding:15px;line-height: 36px}
+			#container{margin:10px;padding:10px;border:dashed 1px  #000;}
+			#container ul{margin:0;padding:0;list-style;none;}
+			#container ul li{width:20px;height:20px;display:inline-block;margin:3px;}
+			.base_unit{border:solid 1px #f1f1f1;}
+			.seat{border:solid 1px #999;background-color:#ccc}
+			li.chose{background-color:#f00}
+		</style>
+	</head>
+<body>
+	<h1>创建座位</h1>
+	<div id="information">
+		总座位数：<input type="text" id="seat_num" /><br>
+		座位排数：<input type="text" id="seat_rows" /><br>
+		第一排座位数：<input type="text" id="seat_first" /><br>
+		最后一排座位数：<input type="text" id="seat_last" /><br>
+		场地形状:<label><input type="radio" name='shape' value='1'>矩形</label> &nbsp;&nbsp; 
+		<label><input type="radio" name="shape" value="2">梯形</label>&nbsp;&nbsp; 
+		<label><input type="radio" name="shape" value="2a">左梯形</label>&nbsp;&nbsp; 
+		<label><input type="radio" name="shape" value="2b">右梯形</label>&nbsp;&nbsp; 
+		<label><input type="radio" name="shape" value="3">扇形</label>&nbsp;&nbsp; 
+		<label><input type="radio" name="shape" value="4">其它</label><br>
+		<input type="button" value="创建场地" id="create">
+	</div>
+	<div id="container"></div>
+	<script>
+	$(function(){
+	$('#create').click(function(){
+	create();
+	})
+	function create(){
+	$('#container').html('');
+	var shape=parseInt($('input:radio:checked').val());
+	var seat_num=parseInt($('#seat_num').val());
+	var seat_rows=parseInt($('#seat_rows').val());
+	var seat_first=parseInt($('#seat_first').val());
+	var seat_last=parseInt($('#seat_last').val());
+	var x=seat_first>seat_last?seat_first+10:seat_last+10;//总宽度（列数）
+	var y=seat_rows;
+	var out_str="";
+	
+	//$(':input[name="shape"]').click(function(){shape=$(this).val();})
+
+		switch (shape){
+			case 1:	
+						out_str+=get_head(x);
+						for(var i=0;i<y;i++){
+							out_str+='<div><ul data-row="'+(i+5)+'">';
+							for(var j=0;j<x;j++){
+								if(j<5 || j> seat_last+4){out_str+='<li data-cols="'+j+'" class="base_unit"></li>'}
+								else{out_str+='<li data-cols="'+j+'" class="seat"></li>'}
+							}
+							out_str+='</ul></div>';
+						}
+						out_str+=get_end(x,y)
+						break;
+			case 2:
+					var dd=Math.abs(seat_last-seat_first);
+					var ck=Math.floor(dd/y);//相邻两行之间的差值
+					var step=1;
+					if(ck==0){
+						while(ck==0){
+							step*=2;
+							ck=Math.floor(step*dd/y)
+						}
+					}
+					console.log("dd="+dd+",ck="+ck+",step="+step)
+					out_str+=get_head(x);
+					for(var i=0;i<y;i++){
+						out_str+='<div><ul data-row="'+(i+5)+'">';
+						//首行
+						if(i==0){
+							for(var j=0;j<x;j++){
+								if(j<(x-seat_first)/2){out_str+='<li data-cols="'+j+'" class="base_unit"></li>';continue;}//左
+								if(j>x-seat_first){out_str+='<li data-cols="'+j+'" class="base_unit"></li>';continue;}//右
+								out_str+='<li data-cols="'+j+'" class="seat"></li>';
+							}
+						out_str+='</ul></div>';
+						continue;
+						}
+						
+						//末行
+						if(i==0){
+							for(var j=0;j<x;j++){
+								if(j<(x-seat_last)/2){out_str+='<li data-cols="'+j+'" class="base_unit"></li>';continue;}//左
+								if(j>x-seat_last){out_str+='<li data-cols="'+j+'" class="base_unit"></li>';continue;}//右
+								out_str+='<li data-cols="'+j+'" class="seat"></li>';
+							}
+						out_str+='</ul></div>';
+						continue;
+						}
+						//
+						for(var j=0;j<x;j++){
+							if(i%step==0){var line_num=seat_first+ck}
+							if(j<(x-line_num)/2){out_str+='<li data-cols="'+j+'" class="base_unit"></li>';continue;}
+							if(j>x-line_num){out_str+='<li data-cols="'+j+'" class="base_unit"></li>';continue;}
+							out_str+='<li data-cols="'+j+'" class="seat"></li>';
+						}
+						out_str+='</ul></div>';
+					}
+					out_str+=get_end(x,seat_rows);
+					
+					
+
+		}
+	$('#container').append($(out_str));			
+					
+					
+
+
+}
+	function get_head(x){
+		var out_str='';
+		for(var i=0;i<5;i++){
+			out_str+='<div><ul data-row="'+i+'">'
+			for(var j=0;j<x;j++){
+				out_str+='<li class="base_unit" data-col="'+j+'"></li>'
+				}
+				out_str+='</ul></div>'
+			}
+	return out_str;
+	}
+	function get_end(x,rows){
+		var out_str='';
+		for(var i=0;i<5;i++){
+			out_str+='<div><ul data-row="'+(i+rows+5)+'">'
+			for(var j=0;j<x;j++){
+				out_str+='<li class="base_unit"  data-col="'+j+'"></li>'
+			}
+			out_str+='</ul></div>'
+		}
+	return out_str;
+	}
+})
+var statu;
+var x;
+var y;
+
+$('#container>div>ul>li').on('mousedown',function(){console.log('00000')
+	x=$(this).data('col');
+	y=$(this).parent('ul').data('row');
+	statu=1;
+})
+
+$('#container>div>ul>li').on('mouseup',function(){
+	if(statu !=1)return;
+	statu=0;
+	var x2=$(this).data('col');
+	var y2=$(this).parent('ul').data('row');
+	var lis=$('#container>div>ul>li')
+	var li_n=lis.length;
+	for(var i=0;i<li_n;i++){
+		var xt=lis.eq(i).data('col');
+		var yt=lis.eq(i).parent('ul').data('row');
+		
+		if(x>x2){
+			if(x2<=xt && xt <=x){
+				if(y>y2){if(y2<=yt && yt <=y){lis.eq(i).addClass('chose');}}
+				if(y<y2){if(y<=yt && yt <=y2){lis.eq(i).addClass('chose');}}
+			}				
+		}
+		if(x<x2){
+			if(x<=xt && xt <=x2){
+				if(y>y2){if(y2<=yt && yt <=y){lis.eq(i).addClass('chose');}}
+				if(y<y2){if(y<=yt && yt <=y2){lis.eq(i).addClass('chose');}}
+			}		
+		}
+	}
+})
+	
+
+</script>	
+</body>
+</html>
