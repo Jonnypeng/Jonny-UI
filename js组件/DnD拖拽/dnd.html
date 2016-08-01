@@ -39,27 +39,15 @@
 </head>
 <body>
 	<div id="content">
-		<div id="source" ondragover="allowDrop(event)" ondrop="drop(event)">
-			<div id="touch-source" draggable="true" ondragstart="drag(event)">
+		<div id="source">
+			<div id="touch-source" >
 				<span class="title"><i class="fa fa-map-pin"></i><br />景点</span>
 			</div>
 	</div>
-		<div id="target" ondrop="drop(event)" ondragover="allowDrop(event)">
+		<div id="target">
 		</div>
 	</div>		
 	<script>
-			function drag(ev){
-				ev.dataTransfer.setData("Text",ev.target.id);
-			};
-
-			function allowDrop(ev){
-				ev.preventDefault();
-			};
-			function drop(ev){
-				ev.preventDefault();
-				var data = ev.dataTransfer.getData("Text");
-				ev.target.appendChild(document.getElementById(data));
-			};
 
 	</script>
 </body>
