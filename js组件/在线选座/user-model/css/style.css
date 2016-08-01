@@ -6,7 +6,7 @@ body{
 	margin:15px auto;
 	background:white;
 	width:900px;
-	cursor: auto;
+	cursor:cell;
 	height:-webkit-calc(900px/(16/9));
 }
 ul.row{
